@@ -10,8 +10,8 @@ public class Application {
 
     public static void main(String[] args) throws Throwable {
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
-        UserRepository userRepository = ctx.getBean(UserRepository.class);
-        userRepository.findAll().forEach(System.out::println);
+        /*UserRepository userRepository = ctx.getBean(UserRepository.class);
+        userRepository.findAll().forEach(System.out::println);*/
     }
 
 }

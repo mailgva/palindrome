@@ -4,8 +4,18 @@
         <title>Spring Security Example</title>
     </head>
     <body>
-        <h1>Welcome!</h1>
-        
-        <p>Click <a th:href="@{/hello}">here</a> to see a greeting.</p>
+        <h1 th:if="${#httpServletRequest.remoteUser}">Welcome [[${#httpServletRequest.remoteUser}]]!</h1>
+        <h1 th:unless="${#httpServletRequest.remoteUser}">Welcome!</h1>
+        <!--<p>Click <a th:href="@{/hello}">here</a> to see a greeting.</p>-->
+        <form th:action="@{/login}" method="post">
+            <input type="hidden" name="username" value="user@gmail.com"/>
+            <input type="hidden" name="password" value="password"/>
+            <input type="submit" value="Login as User"/>
+        </form>
+
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
+
     </body>
 </html>

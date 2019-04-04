@@ -4,13 +4,9 @@ import com.gorbatenko.polindrome.AuthorizedUser;
 import com.gorbatenko.polindrome.model.User;
 import com.gorbatenko.polindrome.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
-
-import java.util.List;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -31,7 +27,6 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UsernameNotFoundException("User " + email + " is not found");
         }
-        System.out.println(user);
         return new AuthorizedUser(user);
     }
 }
