@@ -1,10 +1,12 @@
 package com.gorbatenko.palindrome.service;
 
+import com.gorbatenko.palindrome.model.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends UserDetailsService {
 
-   /* User create(User user);
+    User create(User user);
+   /*
 
     void delete(int id);
 

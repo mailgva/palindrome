@@ -26,12 +26,14 @@
                 </form>
             </div>
 
-            <div th:unless="${#httpServletRequest.remoteUser}">
+            <div class="circle" th:unless="${#httpServletRequest.remoteUser}">
                 <h2>User: Guest</h2>
-                <form th:action="@{/login}" method="post">
-                    <input type="hidden" name="username" value="wizard@gmail.com"/>
-                    <input type="hidden" name="password" value="password"/>
-                    <input type="submit" value="Login as wizard"/>
+                <form id="formLogin" th:action="@{/login}" method="post">
+                    <input id="login" type="text" name="username" placeholder="email" />
+                    <input id="pass" type="text" name="password" placeholder="password"/>
+                    <input type="submit" value="Login"/>
+                    <button type="button" onclick="loginAsWizard()">Login as wizard</button>
+                    <!--<input type="button" onclick="window.location.href = '/register';" value="Register"/>-->
                 </form>
             </div>
         </td>
@@ -60,7 +62,8 @@
                     <td width="30%">
                         <p>HISTORY</p>
                         <div class="circle" >
-                            <div style="width: 100%" id="historyList"></div>
+                            <!--<div style="width: 100%" id="historyList"></div>-->
+                            <textarea style="width: 100%;" rows="10" id="historyList"></textarea>
                         </div>
                         <br>
                         <div style="display: none;" id="waitMessage">Wait for calculation</div>
@@ -80,6 +83,12 @@
         getHistory()
     });
 
+    function loginAsWizard() {
+        $('#login').val("wizard@gmail.com");
+        $('#pass').val("password");
+        $('#formLogin').submit();
+    }
+
     function getHistory() {
         const ajaxUrl = "ajax/history";
 
@@ -92,7 +101,7 @@
                 if(!jQuery.isEmptyObject(data)) {
                     var text = "";
                     $.each(data, function(i, item) {
-                        text = text + item[1] + "<br>";
+                        text = text + item[1] + "\n";
                     });
                     $('#historyList').html(text);
                 }
@@ -110,7 +119,7 @@
         $('#resultField').html("");
 
         var text = $('#historyList').html();
-        $('#historyList').html(value  + "<br>" +  text.trim());
+        $('#historyList').html(value  + "\n" +  text.trim());
 
         $.ajax({
             type: "GET",
@@ -127,6 +136,14 @@
                                    "Max: " + data.maxUI;
 
                         $('#resultField').html(text);
+
+                        text = "";
+                        if(data.history.length > 0) {
+                            $.each(data.history, function (i, item) {
+                                text = text + item[1] + "\n";
+                            });
+                            $('#historyList').html(text);
+                        }
                     }
                 }
             }

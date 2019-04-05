@@ -1,6 +1,7 @@
 package com.gorbatenko.palindrome.web;
 
 import com.gorbatenko.palindrome.model.History;
+import com.gorbatenko.palindrome.model.User;
 import com.gorbatenko.palindrome.repository.HistoryRepository;
 import com.gorbatenko.palindrome.repository.UserRepository;
 import com.gorbatenko.palindrome.to.ResultTo;
@@ -47,7 +48,8 @@ public class UIController {
                 max = PalindromUtil.findMaxValue(value);
             }
         }
-        return new ResultTo(value, min, max, dopInfo);
+
+        return new ResultTo(value, min, max, dopInfo, getHistory());
     }
 
     @GetMapping("/history")
@@ -60,5 +62,17 @@ public class UIController {
         return result;
 
     }
+
+    @GetMapping("/user/{email}")
+    public String getUser(@PathVariable("email") String email) {
+        User user = userRepository.getByEmail(email);
+        return (user != null ? "true" : "false");
+    }
+
+    @GetMapping("/users")
+    public List<User> getUsers() {
+        return userRepository.findAll();
+    }
+
 
 }

@@ -1,0 +1,85 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="_csrf" content="" th:attr="content=${_csrf.token}" />
+    <meta name="_csrf_header" content="" th:attr="content=${_csrf.headerName}"/>
+    <base href="" th:href="${#httpServletRequest.getContextPath()}+'/'" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="/css/style.css" rel="stylesheet">
+    <title>Palindrome search</title>
+
+</head>
+<body>
+<table class="basic">
+    <tr>
+        <td class="top">
+            <h1>Palindrome search</h1>
+        </td>
+    </tr>
+    <tr>
+        <td class="logininfo">
+
+            <div class="circle">
+                <h2>Register new User</h2>
+                <form id="formRegister" name='form' action="/register" method='POST'>
+                    <table>
+                        <tr>
+                            <td>Name:</td>
+                            <td><input type='text' name='username' id="login" value='' placeholder="name"></td>
+                        </tr>
+                        <tr>
+                            <td>Email:</td>
+                            <td><input type='email' name='username' id="email" value='' placeholder="email"></td>
+                        </tr>
+                        <tr>
+                            <td>Password:</td>
+                            <td><input type='password' name='password' id="pass"  placeholder="password"/></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <!--<td><input name="submit" type="submit" value="submit" /></td>-->
+                                <input type="button" onclick="window.location.href = '/app';" value="Cancel"/>
+                                <button type="button" onclick="tryRegister();">Register</button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </td>
+    </tr>
+
+</table>
+
+
+
+<script>
+
+
+    function tryRegister() {
+        var email = $('#email').val();
+
+        const ajaxUrl = "ajax/user/";
+
+        $.ajax({
+            type: "GET",
+            url: ajaxUrl + email,
+            dataType: "json",
+            data: {},
+            success: function(data){
+                if(data.toString() === "false".toString()) {
+                    alert("Data for registration OK!");
+                    $('#formRegister').submit();
+                } else {
+                    alert("User already exist");
+                }
+            }
+        });
+    }
+
+
+
+
+</script>
+</body>
+</html>
