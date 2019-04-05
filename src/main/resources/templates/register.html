@@ -22,15 +22,15 @@
 
             <div class="circle">
                 <h2>Register new User</h2>
-                <form id="formRegister" name='form' action="/register" method='POST'>
+                <form id="formRegister" name='form' th:action="@{/register}" method="post" >
                     <table>
                         <tr>
                             <td>Name:</td>
-                            <td><input type='text' name='username' id="login" value='' placeholder="name"></td>
+                            <td><input type='text' name='name' id="login" value='' placeholder="name"></td>
                         </tr>
                         <tr>
                             <td>Email:</td>
-                            <td><input type='email' name='username' id="email" value='' placeholder="email"></td>
+                            <td><input type='email' name='email' id="email" value='' placeholder="email"></td>
                         </tr>
                         <tr>
                             <td>Password:</td>
@@ -69,7 +69,9 @@
             success: function(data){
                 if(data.toString() === "false".toString()) {
                     alert("Data for registration OK!");
+                    console.log($('#formRegister').find('input[name="username"]').val() )
                     $('#formRegister').submit();
+
                 } else {
                     alert("User already exist");
                 }

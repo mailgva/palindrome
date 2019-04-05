@@ -8,16 +8,15 @@ import com.gorbatenko.palindrome.service.UserServiceImpl;
 import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Collections;
 
 @Controller
 public class WebController {
     @Autowired
-    private UserRepository repository;
+    private UserService userService;
 
     @GetMapping("/")
     public String index() {
@@ -34,10 +33,10 @@ public class WebController {
         return "register";
     }
 
-    @PostMapping("/register")
-    public String newUser(@RequestBody User user) {
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public String newUser(@ModelAttribute User user) {
         user.setRoles(Collections.singleton(Role.ROLE_USER));
-        repository.save(user);
+        userService.create(user);
         return "redirect:app";
     }
 

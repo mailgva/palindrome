@@ -28,12 +28,15 @@
 
             <div class="circle" th:unless="${#httpServletRequest.remoteUser}">
                 <h2>User: Guest</h2>
+                <div class="error" th:if="${param.error}">
+                    Invalid username and password.
+                </div>
                 <form id="formLogin" th:action="@{/login}" method="post">
                     <input id="login" type="text" name="username" placeholder="email" />
-                    <input id="pass" type="text" name="password" placeholder="password"/>
+                    <input id="pass" type="password" name="password" placeholder="password"/>
                     <input type="submit" value="Login"/>
                     <button type="button" onclick="loginAsWizard()">Login as wizard</button>
-                    <!--<input type="button" onclick="window.location.href = '/register';" value="Register"/>-->
+                    <input type="button" onclick="window.location.href = '/register';" value="Register"/>
                 </form>
             </div>
         </td>
