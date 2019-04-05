@@ -1,0 +1,144 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="_csrf" content="" th:attr="content=${_csrf.token}" />
+    <meta name="_csrf_header" content="" th:attr="content=${_csrf.headerName}"/>
+    <base href="" th:href="${#httpServletRequest.getContextPath()}+'/'" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="/css/style.css" rel="stylesheet">
+    <title>Palindrome search</title>
+
+</head>
+<body>
+<table class="basic">
+    <tr>
+        <td class="top">
+            <h1>Palindrome search</h1>
+        </td>
+    </tr>
+    <tr>
+        <td class="logininfo">
+            <div th:if="${#httpServletRequest.remoteUser}">
+                <h2>User: [[${#httpServletRequest.remoteUser}]]</h2>
+                <form th:action="@{/logout}" method="post">
+                    <input type="submit" value="Sign Out"/>
+                </form>
+            </div>
+
+            <div th:unless="${#httpServletRequest.remoteUser}">
+                <h2>User: Guest</h2>
+                <form th:action="@{/login}" method="post">
+                    <input type="hidden" name="username" value="wizard@gmail.com"/>
+                    <input type="hidden" name="password" value="password"/>
+                    <input type="submit" value="Login as wizard"/>
+                </form>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td class="content">
+            <table class="basic">
+                <tr>
+                    <td width="30%">
+                        <div class="circle">
+                            <div>
+                                <div><p> Find your palindrome:</p>
+                                    <div style="display: inline-block;" th:if="${#httpServletRequest.remoteUser}">
+                                        <input type="number" name="value" id="calcvalue" min="1" placeholder="100" onkeypress="keyPress(event)" />
+                                    </div>
+                                    <div style="display: inline-block;" th:unless="${#httpServletRequest.remoteUser}">
+                                        <input type="number" name="value" id="calcvalue" min="1" max="999999" placeholder="100" onkeypress="keyPress(event)"/>
+                                    </div>
+                                    <button type="button" onclick="getCalculation()">Find</button>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td width="30%"></td>
+
+                    <td width="30%">
+                        <p>HISTORY</p>
+                        <div class="circle" >
+                            <div style="width: 100%" id="historyList"></div>
+                        </div>
+                        <br>
+                        <div style="display: none;" id="waitMessage">Wait for calculation</div>
+                        <div class="circle" id="resultField"></div>
+
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+
+
+<script>
+    $(function () {
+        getHistory()
+    });
+
+    function getHistory() {
+        const ajaxUrl = "ajax/history";
+
+        $.ajax({
+            type: "GET",
+            url: ajaxUrl,
+            dataType: "json",
+            data: {},
+            success: function(data){
+                if(!jQuery.isEmptyObject(data)) {
+                    var text = "";
+                    $.each(data, function(i, item) {
+                        text = text + item[1] + "<br>";
+                    });
+                    $('#historyList').html(text);
+                }
+            }
+        });
+    }
+
+    function getCalculation() {
+        let wait = $('#waitMessage');
+        wait.attr("style", "display: block;");
+
+        const ajaxUrl = "ajax/value/";
+        let value = $('#calcvalue').val();
+
+        $('#resultField').html("");
+
+        var text = $('#historyList').html();
+        $('#historyList').html(value  + "<br>" +  text.trim());
+
+        $.ajax({
+            type: "GET",
+            url: ajaxUrl + value,
+            dataType: "json",
+            data: {},
+            success: function(data){
+                if(!jQuery.isEmptyObject(data)) {
+                    if(data.info != "") {
+                        alert(data.info);
+                    } else {
+                        var text = "For " + data.value + "<br>" +
+                                   "Min: " + data.minUI  + "<br>" +
+                                   "Max: " + data.maxUI;
+
+                        $('#resultField').html(text);
+                    }
+                }
+            }
+        });
+        wait.attr("style", "display: none;");
+    }
+
+    function keyPress(e) {
+        if (e.keyCode == 13) {
+            getCalculation();
+        }
+    }
+</script>
+</body>
+</html>

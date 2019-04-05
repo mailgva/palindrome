@@ -1,6 +1,5 @@
-package com.gorbatenko.polindrome;
+package com.gorbatenko.palindrome;
 
-import com.gorbatenko.polindrome.repository.UserRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;

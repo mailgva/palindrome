@@ -1,6 +1,6 @@
-package com.gorbatenko.polindrome;
+package com.gorbatenko.palindrome;
 
-import com.gorbatenko.polindrome.model.User;
+import com.gorbatenko.palindrome.model.User;
 import lombok.Data;
 
 @Data

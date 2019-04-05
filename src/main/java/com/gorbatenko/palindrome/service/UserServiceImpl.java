@@ -1,8 +1,8 @@
-package com.gorbatenko.polindrome.service;
+package com.gorbatenko.palindrome.service;
 
-import com.gorbatenko.polindrome.AuthorizedUser;
-import com.gorbatenko.polindrome.model.User;
-import com.gorbatenko.polindrome.repository.UserRepository;
+import com.gorbatenko.palindrome.AuthorizedUser;
+import com.gorbatenko.palindrome.model.User;
+import com.gorbatenko.palindrome.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;

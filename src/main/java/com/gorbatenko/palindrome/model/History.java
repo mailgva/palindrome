@@ -1,5 +1,6 @@
-package com.gorbatenko.polindrome.model;
+package com.gorbatenko.palindrome.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,18 +13,19 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Entity
 @Table(name = "history")
 public class History {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Generated(GenerationTime.INSERT)
+    @JsonFormat(pattern="yyyy-MM-dd")
     @Column(name = "date_time", columnDefinition = "timestamp default now()")
     private LocalDateTime dateTime;
 

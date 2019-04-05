@@ -1,6 +1,6 @@
-package com.gorbatenko.polindrome.web;
+package com.gorbatenko.palindrome.web;
 
-import com.gorbatenko.polindrome.AuthorizedUser;
+import com.gorbatenko.palindrome.AuthorizedUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 

@@ -1,4 +1,4 @@
-package com.gorbatenko.polindrome.model;
+package com.gorbatenko.palindrome.model;
 
 import org.springframework.security.core.GrantedAuthority;
 

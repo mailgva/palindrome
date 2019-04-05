@@ -1,6 +1,6 @@
-package com.gorbatenko.polindrome.util;
+package com.gorbatenko.palindrome.util;
 
-import com.gorbatenko.polindrome.model.User;
+import com.gorbatenko.palindrome.model.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
 

@@ -1,0 +1,32 @@
+body {
+    width: 60%;
+    margin: 0 auto;
+}
+
+table.basic {
+    width: 100%;
+}
+
+td.top {
+    height: 25px;
+    padding: 10px;
+    background: #1e4f7e;
+    color: #fff;
+}
+
+td.logininfo {
+    height: 25px;
+    padding: 5px;
+}
+
+td.content {
+    height: 40%;
+    padding: 10px;
+}
+div.circle {
+    padding: 10px;
+    border-width: 1px;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: black;
+}
