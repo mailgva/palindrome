@@ -40,5 +40,14 @@ public class WebController {
         return "redirect:app";
     }
 
+    @ModelAttribute("userName")
+    private String getUserName(){
+        try {
+            return  SecurityUtil.authUserName();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 
 }

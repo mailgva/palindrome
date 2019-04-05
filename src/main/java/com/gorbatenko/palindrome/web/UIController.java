@@ -29,8 +29,11 @@ public class UIController {
 
     @GetMapping("/value/{value}")
     public ResultTo getValue(@PathVariable("value") long value){
+        boolean isGuest = true;
         if(SecurityUtil.safeGet() != null) {
-            historyRepository.save(new History(userRepository.getByEmail(SecurityUtil.authUserName()), value));
+            isGuest = false;
+            historyRepository.save(new History(
+                    userRepository.getByEmail(SecurityUtil.authUserEmail()), value));
         }
 
         String errorMessage      = "This that number [%d] is incorrect for search min/max palindroms.";
@@ -49,7 +52,7 @@ public class UIController {
             }
         }
 
-        return new ResultTo(value, min, max, dopInfo, getHistory());
+        return new ResultTo(value, min, max, dopInfo, isGuest, getHistory());
     }
 
     @GetMapping("/history")
@@ -57,7 +60,8 @@ public class UIController {
         List<History> result = new ArrayList<>();
 
         if(SecurityUtil.safeGet() != null) {
-            result = historyRepository.getByUserIdSOrderByDateTimeDesc(userRepository.getByEmail(SecurityUtil.authUserName()).getId());
+            result = historyRepository.getByUserIdSOrderByDateTimeDesc(
+                    userRepository.getByEmail(SecurityUtil.authUserEmail()).getId());
         }
         return result;
 

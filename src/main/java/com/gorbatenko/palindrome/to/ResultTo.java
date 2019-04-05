@@ -14,5 +14,6 @@ public class ResultTo {
     private Long maxUI;
 
     private String info;
+    private boolean isGuest = true;
     private List<History> history;
 }

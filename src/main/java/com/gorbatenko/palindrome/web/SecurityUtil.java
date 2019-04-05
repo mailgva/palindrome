@@ -27,6 +27,10 @@ public class SecurityUtil {
     }
 
     public static String authUserName() {
+        return get().getUser().getName();
+    }
+
+    public static String authUserEmail() {
         return get().getUsername();
     }
 

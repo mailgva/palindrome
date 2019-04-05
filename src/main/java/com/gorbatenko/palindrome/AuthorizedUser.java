@@ -1,6 +1,7 @@
 package com.gorbatenko.palindrome;
 
 import com.gorbatenko.palindrome.model.User;
+import com.gorbatenko.palindrome.util.UserUtil;
 import lombok.Data;
 
 @Data
@@ -11,6 +12,7 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
 
     public AuthorizedUser(User user) {
         super(user.getEmail(), user.getPassword(), true, true, true, true, user.getRoles());
+        this.user = user;
     }
 
     @Override

@@ -19,17 +19,17 @@
     </tr>
     <tr>
         <td class="logininfo">
-            <div th:if="${#httpServletRequest.remoteUser}">
-                <h2>User: [[${#httpServletRequest.remoteUser}]]</h2>
+            <div class="circle" th:if="${#httpServletRequest.remoteUser}">
+                <h2 id="loggedUser" >User: <span th:text="${userName}"></span></h2>
                 <form th:action="@{/logout}" method="post">
                     <input type="submit" value="Sign Out"/>
                 </form>
             </div>
 
             <div class="circle" th:unless="${#httpServletRequest.remoteUser}">
-                <h2>User: Guest</h2>
+                <h2 id="loggedUser">User: Guest</h2>
                 <div class="error" th:if="${param.error}">
-                    Invalid username and password.
+                    Invalid email and password.
                 </div>
                 <form id="formLogin" th:action="@{/login}" method="post">
                     <input id="login" type="text" name="username" placeholder="email" />
@@ -45,15 +45,16 @@
         <td class="content">
             <table class="basic">
                 <tr>
-                    <td width="30%">
+                    <td width="30%" style="vertical-align: text-top;">
                         <div class="circle">
                             <div>
                                 <div><p> Find your palindrome:</p>
                                     <div style="display: inline-block;" th:if="${#httpServletRequest.remoteUser}">
-                                        <input type="number" name="value" id="calcvalue" min="1" placeholder="100" onkeypress="keyPress(event)" />
+                                        <input type="number" name="value" id="calcvalue" min="1" pattern="\d*" placeholder="100" onkeypress="keyPress(event)" />
                                     </div>
                                     <div style="display: inline-block;" th:unless="${#httpServletRequest.remoteUser}">
-                                        <input type="number" name="value" id="calcvalue" min="1" max="999999" placeholder="100" onkeypress="keyPress(event)"/>
+                                        <input type="number" name="value" id="calcvalue" pattern="\d*"
+                                               onkeypress="if(this.value.length==6) {return false;} else {keyPress(event);} " min="0" placeholder="100" />
                                     </div>
                                     <button type="button" onclick="getCalculation()">Find</button>
                                 </div>
@@ -131,10 +132,17 @@
             data: {},
             success: function(data){
                 if(!jQuery.isEmptyObject(data)) {
+                    if(data.guest.toString() === "true".toString()) {
+                        $('#historyList').html(value);
+                        if($('#loggedUser').html().indexOf("User: Guest") == -1) {
+                            $('#loggedUser').html("User: Guest");
+                        }
+                    }
+
                     if(data.info != "") {
                         alert(data.info);
                     } else {
-                        var text = "For " + data.value + "<br>" +
+                        var text = "For "  + data.value + "<br>" +
                                    "Min: " + data.minUI  + "<br>" +
                                    "Max: " + data.maxUI;
 
